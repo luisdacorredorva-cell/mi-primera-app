@@ -7,24 +7,22 @@ function App() {
 
   const agregarTarea = () => {
     if (nuevaTarea.trim() === '') return
-
-    setTareas([
-      ...tareas,
-      { id: Date.now(), nombre: nuevaTarea }
+    setTareas(prevTareas => [
+      ...prevTareas,
+      { id: Date.now(), nombre: nuevaTarea.trim() }
     ])
-
     setNuevaTarea('')
   }
 
   const eliminarTarea = (id) => {
-    setTareas(tareas.filter(tarea => tarea.id !== id))
+    setTareas(prevTareas => prevTareas.filter(tarea => tarea.id !== id))
   }
 
   return (
     <main className="contenedor">
       <h1>Mi primera aplicación publicada en Vercel</h1>
       <p>Aplicación desarrollada con React y Vite</p>
-
+      
       <div className="formulario">
         <input
           type="text"
@@ -32,7 +30,6 @@ function App() {
           value={nuevaTarea}
           onChange={(e) => setNuevaTarea(e.target.value)}
         />
-
         <button onClick={agregarTarea}>
           Agregar
         </button>
@@ -43,7 +40,7 @@ function App() {
       <ul>
         {tareas.map(tarea => (
           <li key={tarea.id}>
-            {tarea.nombre}
+            <span>{tarea.nombre}</span>
             <button onClick={() => eliminarTarea(tarea.id)}>
               Eliminar
             </button>
